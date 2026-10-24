@@ -68,7 +68,23 @@ framework=spa,backend=hono,api=orpc,database=sqlite,auth=better-auth
 
 ## 安装
 
-本插件不发布到 npm，用 profile 的本地 `link:` 依赖安装。以默认 `desktop` profile 为例：
+本插件不发布到 npm。两种装法，任选其一：
+
+**A. 直接用 GitHub 仓库**（推荐，无需本地放置源码）
+
+在 `%DSH_HOME%\profiles\desktop\package.json` 里把依赖写成 git 形式：
+
+```json
+"dependencies": {
+  "dsh-vibestart": "github:Eunsolfs/dsh-vibestart"
+}
+```
+
+然后在本机已有 checkout 上安装时用 `link:`（见下），或让 pnpm 拉取：`pnpm add github:Eunsolfs/dsh-vibestart`。
+
+**B. 用本地路径 `link:`**（改代码即时生效，开发时用）
+
+以默认 `desktop` profile 为例：
 
 1. 把仓库放在本机某个目录，例如 `C:\Users\<you>\Documents\deepseek-harness\default-workspace\dsh-vibestart`。
 2. 编辑 `%DSH_HOME%\profiles\desktop\package.json`（`%DSH_HOME%` 默认是 `C:\Users\<you>\.dsh`）：

@@ -64,5 +64,13 @@
     "better-auth",
     "tanstack-start"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Eunsolfs/dsh-vibestart.git"
+  },
+  "homepage": "https://github.com/Eunsolfs/dsh-vibestart#readme",
+  "bugs": {
+    "url": "https://github.com/Eunsolfs/dsh-vibestart/issues"
+  },
   "license": "MIT"
 }

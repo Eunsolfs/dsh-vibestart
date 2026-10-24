@@ -68,7 +68,23 @@ Field definitions and validation live in [lib/plugin/config.js](lib/plugin/confi
 
 ## Installation
 
-This plugin is not published to npm; install it as a local `link:` dependency of your profile. Using the default `desktop` profile:
+This plugin is not published to npm. Two ways to install, pick one:
+
+**A. Straight from GitHub** (no local checkout needed)
+
+Point the dependency at the repository in `%DSH_HOME%\profiles\desktop\package.json`:
+
+```json
+"dependencies": {
+  "dsh-vibestart": "github:Eunsolfs/dsh-vibestart"
+}
+```
+
+Or let pnpm fetch it: `pnpm add github:Eunsolfs/dsh-vibestart`.
+
+**B. Local `link:`** (edits take effect immediately; use this while developing)
+
+Using the default `desktop` profile:
 
 1. Put the repository somewhere on disk, e.g. `C:\Users\<you>\Documents\deepseek-harness\default-workspace\dsh-vibestart`.
 2. Edit `%DSH_HOME%\profiles\desktop\package.json` (`%DSH_HOME%` defaults to `C:\Users\<you>\.dsh`):
