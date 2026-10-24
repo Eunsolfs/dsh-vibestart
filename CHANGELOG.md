@@ -15,9 +15,15 @@
   - `vibestart_plan`：校验栈（`legal` / `incomplete` / `illegal` / `invalid`），给补全、最近合法组合、最小改动与完整命令。
   - `vibestart_run`：经 `ctx.shell` 受控执行；默认 `--dry-run --json` 预览，`apply=true` 才写；`create` 不带 `--yes`，维护写操作才带；`directory` 必须是相对路径且不含 `..`。
 - 离线快照 `data/snapshot.json`：来自 `npx --yes vibestart-cli@0.1.1 --list --json`，带版本与 sha256 完整性摘要；`scripts/snapshot.mjs` 可重建，`--check` 可离线校验。
-- 配置项：`skill`、`allowExec`、`allowApply`、`cliVersion`、`runner`、`maxStacks`、`previewTimeoutMs`、`applyTimeoutMs`（见 [lib/plugin/config.js](lib/plugin/config.js)）。
+- 配置项：`skill`、`allowExec`、`allowApply`、`cliVersion`、`runner`、`maxStacks`、`previewTimeoutMs`、`applyTimeoutMs`、`npmCacheDir`（见 [lib/plugin/config.js](lib/plugin/config.js)）。`npmCacheDir` 把 `npm_config_cache` 指到命令自己的工作目录，否则 DSH 默认的 `workspace-write` 策略会让 `npx` 在写全局缓存时 `EPERM`。
 - 双语文档（[README.md](README.md) / [README.en.md](README.en.md)）、[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) 与 MIT [LICENSE](LICENSE)。
 - GitHub Actions CI（[.github/workflows/ci.yml](.github/workflows/ci.yml)）：Node 22 / 24 上跑 `npm test` 与快照检查。
+
+### Fixed
+
+- 命令形状按上游证据逐条校正：`doctor` **不接受** `--dry-run`（传了 exit 2），`--offline` 只对 `doctor` 生效；`add` 的能力 ID 是**位置参数**（`add knip ultracite`），不传时退化为只读的 `add --list`，`apply=true` 会被拒。
+- 真实 CLI 的 `files: [{owner, path}]` 与 `nextSteps: [{note, run}]` 折成可读字符串，渲染不再出现 `[object Object]`。
+- 测试入口改为 `scripts/test.mjs`（进程内 import 各测试文件）：Node 原生 runner 给每个文件开子进程，受限环境（DSH Windows 沙箱 / 部分 CI）会 `spawn EPERM`。
 
 ### Notes
 

@@ -158,6 +158,41 @@ test('vibestart_run 拒绝把文件写到工作区外', async () => {
   assert.match(String(result.message), /相对路径|\.\./u)
 })
 
+test('vibestart_run 把上游的对象数组折成可读字符串（真实 CLI 形状）', async () => {
+  const stdout = JSON.stringify({
+    ok: true,
+    dryRun: true,
+    fileCount: 2,
+    files: [{ owner: 'vite-plus', path: '.gitattributes' }, { owner: 'app', path: '.env', ignored: true }],
+    nextSteps: [{ note: 'install Vite+', run: 'curl -fsSL https://vite.plus | bash' }],
+  })
+  const shell = {
+    resolve: spec => spec,
+    execute: async () => ({
+      result: async () => ({ exitCode: 0, timedOut: false, aborted: false, stdout: { text: stdout }, stderr: { text: '' } }),
+    }),
+  }
+  const specsWithShell = buildToolSpecs({
+    config: DEFAULT_CONFIG,
+    getCatalog: () => catalog,
+    getShell: () => shell,
+  })
+  const runTool = specsWithShell.find(spec => spec.name === 'vibestart_run')
+  const full = catalog.stacks[0].values
+  const stack = Object.entries(full)
+    .map(([kind, value]) => `${kind}=${value || 'none'}`)
+    .join(',')
+  const value = await runTool.execute({ command: 'create', stack, directory: 'demo' }, { signal: new AbortController().signal })
+
+  assert.equal(value.ok, true)
+  assert.deepEqual(value.files, ['.gitattributes', '.env（本地 .env，git 忽略）'])
+  assert.deepEqual(value.nextSteps, ['install Vite+ → curl -fsSL https://vite.plus | bash'])
+  const rendered = runTool.output.render({}, value, { ok: true })
+  assert.ok(!rendered[0].text.includes('[object Object]'), '渲染不得出现 [object Object]')
+  assert.ok(rendered[0].text.includes('.gitattributes'))
+  assert.ok(rendered[0].text.includes('install Vite+ →'))
+})
+
 test('维护命令的命令形状与上游一致（add 位置参数 / doctor 无 --dry-run）', async () => {
   const plan = args => run('vibestart_plan', args)
 
