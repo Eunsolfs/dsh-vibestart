@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="dsh-vibestart">
+  <rect width="64" height="64" rx="14" fill="#0B1220"/>
+  <path d="M12 23 32 12l20 11-20 11z" fill="#38BDF8"/>
+  <path d="M12 32 32 43l20-11v4L32 47 12 36z" fill="#6366F1"/>
+  <path d="M12 41 32 52l20-11v4L32 56 12 45z" fill="#22D3EE"/>
+  <path d="m19 25 5 3-5 3" fill="none" stroke="#0B1220" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M28 31h9" stroke="#0B1220" stroke-width="2.6" stroke-linecap="round"/>
+</svg>

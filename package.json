@@ -1,0 +1,68 @@
+{
+  "name": "dsh-vibestart",
+  "version": "0.1.0",
+  "private": true,
+  "description": "给 DeepSeek Harness 增加 VibeStart 能力：内置 vibestart 技能，离线列出现行全栈 TypeScript 技术栈（15 个 kind、3409 个已校验组合）、校验任意组合并生成可直接执行的命令，并可经 ctx.shell 受控执行 vibestart-cli（默认 --dry-run）。 / VibeStart for DeepSeek Harness: a bundled skill, an offline stack catalog, stack validation with exact CLI commands, and guarded ctx.shell execution (dry-run by default).",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./icon": "./icon.svg",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "lib",
+    "data/snapshot.json",
+    "skills",
+    "icon.svg",
+    "cordis.patch.yml",
+    "README.md",
+    "README.en.md",
+    "CHANGELOG.md",
+    "THIRD_PARTY_NOTICES.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22.16.0"
+  },
+  "scripts": {
+    "test": "node scripts/verify.mjs && node scripts/test.mjs",
+    "verify": "node scripts/verify.mjs",
+    "snapshot": "node scripts/snapshot.mjs",
+    "snapshot:check": "node scripts/snapshot.mjs --check"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "~4.0.5",
+    "@deepseek-ai/dsh-skill": ">=0.2.1-rc.1 <0.3.0-0",
+    "@deepseek-ai/dsh-tools": ">=0.2.1-rc.1 <0.3.0-0",
+    "@deepseek-ai/dsh-shell": ">=0.2.1-rc.1 <0.3.0-0"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/dsh-skill": {
+      "optional": true
+    },
+    "@deepseek-ai/dsh-shell": {
+      "optional": true
+    }
+  },
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "vibestart",
+    "scaffold",
+    "starter",
+    "typescript",
+    "fullstack",
+    "vite-plus",
+    "drizzle",
+    "better-auth",
+    "tanstack-start"
+  ],
+  "license": "MIT"
+}

@@ -1,0 +1,27 @@
+# dsh-vibestart bundle patch
+#
+# 一行插件：本 bundle 提供的唯一插件负责
+#   1. 注册内置 vibestart 技能（skills 缝）；
+#   2. 注册三个模型工具：vibestart_stacks（离线栈目录）、vibestart_plan（校验 + 命令）、
+#      vibestart_run（经 ctx.shell 受控执行，默认 --dry-run）。
+#
+# 工具不联网就能回答「有哪些 kind / 哪些组合合法 / 我该敲什么命令」；
+# 只有 vibestart_run 且 apply=true 时才会真的启动 npx 去写文件。
+#
+# 注意：插入行的 config 一旦被覆盖层匹配就会整体替换，改这里时请保留全部字段。
+- insert:
+    - id: dsh-vibestart
+      name: dsh-vibestart
+      config:
+        # 注册内置 vibestart 技能；关掉后三个工具照常工作。
+        skill: true
+        # 允许 vibestart_run 启动 CLI（false = 只出命令不执行）。
+        allowExec: true
+        # 允许 vibestart_run 在 apply=true 时真正写盘（false = 永远只预览）。
+        allowApply: true
+        # 固定的上游版本：预览与执行用同一版本，避免两次 npx 之间上游发版。
+        cliVersion: 0.1.1
+        # npx 或 pnpm-dlx。
+        runner: npx
+        # 未显式传 limit 时，vibestart_stacks 返回的样本条数（1-8）。
+        maxStacks: 5

@@ -1,0 +1,7 @@
+# 统一换行：仓库内一律 LF，避免 Windows 检出时把生成物（快照）改写成 CRLF，
+# 破坏「快照字节级可复现」的校验。
+* text=auto eol=lf
+
+# 生成物按字节原样存储，不做任何换行转换。
+data/snapshot.json -text
+*.patch.yml text eol=lf

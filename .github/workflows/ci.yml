@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [main, dsh-vibestart]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Node ${{ matrix.node }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [22, 24]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      # 本插件零第三方依赖，也没有 lockfile；npm ci 失败不影响后续步骤。
+      - name: Optional install (ignored)
+        run: npm ci --omit=dev --ignore-scripts || true
+
+      - name: Snapshot check (offline)
+        run: node scripts/snapshot.mjs --check
+
+      - name: Test
+        run: npm test
